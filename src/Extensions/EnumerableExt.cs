@@ -1,5 +1,11 @@
 ﻿namespace Extensions;
 
+#region << Using >>
+
+using System.Text;
+
+#endregion
+
 public static class EnumerableExt
 {
     #region Constants
@@ -38,5 +44,21 @@ public static class EnumerableExt
         var currentPage = new[] { new[] { page.GetValueOrDefault(defaultPage), 1 }.Max(), maxPage }.Min() - 1;
 
         return queryable.Skip(currentPageSize * currentPage).Take(currentPageSize);
+    }
+
+    /// <summary>
+    ///     Returns a HEX string from bytes enumerable
+    /// </summary>
+    public static string ToHexString(this IEnumerable<byte> bytes)
+    {
+        var bytesArray = bytes.ToArrayOrEmpty();
+        if (!bytesArray.Any())
+            return string.Empty;
+
+        var hex = new StringBuilder(bytesArray.Length * 2);
+        foreach (var b in bytesArray)
+            hex.AppendFormat("{0:x2}", b);
+
+        return hex.ToString();
     }
 }
