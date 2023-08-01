@@ -1,0 +1,12 @@
+*.DotSettings
+*.cache
+*.user
+*.v2
+
+src/.vs/
+
+src/Extensions/bin/
+src/Extensions/obj/
+
+src/Tests/bin/
+src/Tests/obj/
