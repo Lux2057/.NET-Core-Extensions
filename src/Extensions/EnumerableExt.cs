@@ -146,18 +146,17 @@ public static class EnumerableExt
     {
         var array = source.ToArrayOrEmpty();
 
-        if (array.Length == 0 || offset > array.Length - 1)
+        if (array.Length == 0 || length <= 0 || offset > array.Length - 1)
             return Array.Empty<T>();
 
-        var result = new List<T>();
-        for (var i = offset; i <= length; i++)
-        {
-            if (i >= array.Length)
-                break;
+        var maxLength = array.Length - offset;
 
-            result.Add(array[i]);
-        }
+        var correctLength = new[] { maxLength, length }.Min();
 
-        return result.ToArray();
+        var result = new T[correctLength];
+
+        Array.Copy(array, offset, result, 0, correctLength);
+
+        return result;
     }
 }

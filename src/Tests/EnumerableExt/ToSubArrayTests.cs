@@ -45,6 +45,12 @@ public class ToSubArrayTests
                              new byte[] { 0, 1, 2, 3 }, 5, 5,
                              Array.Empty<byte>()
                      };
+
+        yield return new object[]
+                     {
+                             new byte[] { 0, 1, 2, 3 }, 3, 5,
+                             new byte[] { 3 }
+                     };
     }
 
     [Theory]
