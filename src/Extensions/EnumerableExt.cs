@@ -155,7 +155,7 @@ public static class EnumerableExt
 
         var result = new T[correctLength];
 
-        Array.Copy(array, offset, result, 0, correctLength);
+        Buffer.BlockCopy(array, offset, result, 0, correctLength);
 
         return result;
     }
