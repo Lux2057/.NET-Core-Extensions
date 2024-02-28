@@ -2,8 +2,12 @@
 
 #region << Using >>
 
+#region << Using >>
+
 using System.Linq.Expressions;
 using System.Reflection;
+
+#endregion
 
 #endregion
 
@@ -12,7 +16,7 @@ public static class ReflectionExt
     /// <summary>
     ///     Returns a PropertyInfo from a member lambda expression
     /// </summary>
-    public static PropertyInfo GetPropertyInfo<TSource, TProperty>(Expression<Func<TSource, TProperty>> propertyLambda)
+    public static PropertyInfo GetPropertyInfo<TSource, TProperty>(this Expression<Func<TSource, TProperty>> propertyLambda)
     {
         if (propertyLambda == null)
             throw new ArgumentNullException(nameof(propertyLambda));
@@ -38,9 +42,7 @@ public static class ReflectionExt
         if (obj == null)
             return default;
 
-        var propertyInfo = GetPropertyInfo(propertyLambda);
-
-        return (TProperty)propertyInfo.GetValue(obj);
+        return (TProperty)propertyLambda.GetPropertyInfo().GetValue(obj);
     }
 
     /// <summary>
@@ -51,8 +53,6 @@ public static class ReflectionExt
         if (obj == null)
             return;
 
-        var propertyInfo = GetPropertyInfo(propertyLambda);
-
-        propertyInfo.SetValue(obj, value);
+        propertyLambda.GetPropertyInfo().SetValue(obj, value);
     }
 }
